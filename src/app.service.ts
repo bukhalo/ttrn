@@ -57,10 +57,10 @@ export class AppService {
   /**
    * Waiting https://github.com/bukhalo/nestjs-telegraf/issues/42
    */
-  // @TelegrafCommand(['all', 'alarm'])
-  // async allCommand(ctx: ContextMessageUpdate) {
-  //   await ctx.reply(
-  //     '@bukhalo, @yaroslav_y, @qwertydemo, @ekzotech, @apushkarev, @spiritsn, @gusevsd, @uuttff8, @r_levkovych, @sunnydaily, @kirich_l, @Derik117',
-  //   );
-  // }
+  @TelegrafCommand(['all', 'alarm'])
+  allCommand(ctx: ContextMessageUpdate) {
+    ctx.reply(
+      '@bukhalo, @yaroslav_y, @qwertydemo, @ekzotech, @apushkarev, @spiritsn, @gusevsd, @uuttff8, @r_levkovych, @sunnydaily, @kirich_l, @Derik117',
+    );
+  }
 }
