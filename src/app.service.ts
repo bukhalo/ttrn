@@ -24,11 +24,13 @@ export class AppService {
     await ctx.reply('тотарен');
   }
 
-  @TelegrafHears(['ярик', 'Ярик', 'ярек', 'Ярек'])
-  async yarekHears(ctx: ContextMessageUpdate) {
-    await ctx.reply(
-      'Вы всё ещё готовите на огне @yaroslav_y? Тогда мы идём к вам.',
-    );
+  @TelegrafHears(new RegExp('(я)(р)(е|и)(к)', 'gi'))
+  yarekHears(ctx: ContextMessageUpdate) {
+    if (booleanRandomizer(50)) {
+      ctx.reply(
+        'Вы всё ещё готовите на огне @yaroslav_y? Тогда мы идём к вам.',
+      );
+    }
   }
 
   @TelegrafOn('message')
@@ -46,8 +48,8 @@ export class AppService {
    * Waiting https://github.com/bukhalo/nestjs-telegraf/issues/42
    */
   @TelegrafHears(['алярм', 'алярма', 'эй чушканы'])
-  async alarm(ctx: ContextMessageUpdate) {
-    await ctx.reply(
+  alarm(ctx: ContextMessageUpdate) {
+    ctx.reply(
       '@bukhalo, @yaroslav_y, @qwertydemo, @ekzotech, @apushkarev, @spiritsn, @gusevsd, @uuttff8, @r_levkovych, @sunnydaily, @kirich_l, @Derik117',
     );
   }
@@ -55,10 +57,10 @@ export class AppService {
   /**
    * Waiting https://github.com/bukhalo/nestjs-telegraf/issues/42
    */
-  @TelegrafCommand(['all', 'alarm'])
-  async allCommand(ctx: ContextMessageUpdate) {
-    await ctx.reply(
-      '@bukhalo, @yaroslav_y, @qwertydemo, @ekzotech, @apushkarev, @spiritsn, @gusevsd, @uuttff8, @r_levkovych, @sunnydaily, @kirich_l, @Derik117',
-    );
-  }
+  // @TelegrafCommand(['all', 'alarm'])
+  // async allCommand(ctx: ContextMessageUpdate) {
+  //   await ctx.reply(
+  //     '@bukhalo, @yaroslav_y, @qwertydemo, @ekzotech, @apushkarev, @spiritsn, @gusevsd, @uuttff8, @r_levkovych, @sunnydaily, @kirich_l, @Derik117',
+  //   );
+  // }
 }
