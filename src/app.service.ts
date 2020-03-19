@@ -6,6 +6,7 @@ import {
   ContextMessageUpdate,
 } from 'nestjs-telegraf';
 import { Extra } from 'telegraf';
+import { booleanRandomizer } from './common/utils';
 
 @Injectable()
 export class AppService {
@@ -32,10 +33,9 @@ export class AppService {
 
   @TelegrafOn('message')
   async toopaAlegantor(ctx: ContextMessageUpdate) {
-    const isWinner: boolean = Math.random() >= 0.97;
     const messageId = ctx.update.message.message_id;
 
-    if (isWinner) {
+    if (booleanRandomizer(1)) {
       // @ts-ignore
       await ctx.reply('ТУПА АЛЕГАНТОР))))))', Extra.inReplyTo(messageId));
     }
