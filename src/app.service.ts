@@ -34,14 +34,15 @@ export class AppService {
   }
 
   @TelegrafOn('message')
-  async toopaAlegantor(ctx: ContextMessageUpdate) {
+  async toopaAlegantor(ctx: ContextMessageUpdate, next) {
     const messageId = ctx.update.message.message_id;
 
     if (booleanRandomizer(1)) {
       // @ts-ignore
       await ctx.reply('ТУПА АЛЕГАНТОР))))))', Extra.inReplyTo(messageId));
+      next();
     }
-    return;
+    next();
   }
 
   /**
