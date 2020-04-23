@@ -1,0 +1,28 @@
+{
+  "steps": [
+    {
+      "name": "node:12",
+      "entrypoint": "npm",
+      "args": ["ci"]
+    },
+    {
+      "name": "node:12",
+      "entrypoint": "npm",
+      "args": ["run", "build"]
+    },
+    {
+      "name": "gcr.io/cloud-builders/gcloud",
+      "args": [
+        "functions",
+        "deploy",
+        "totaren-bot",
+        "--runtime",
+        "nodejs10",
+        "--trigger-http",
+        "--allow-unauthenticated",
+        "--entry-point",
+        "webhook"
+      ]
+    }
+  ]
+}
