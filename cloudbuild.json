@@ -16,12 +16,18 @@
         "functions",
         "deploy",
         "totaren-bot",
+        "--region",
+        "europe-west3",
+        "--allow-unauthenticated",
+        "--entry-point",
+        "webhook",
+        "--memory",
+        "128MB",
         "--runtime",
         "nodejs10",
         "--trigger-http",
-        "--allow-unauthenticated",
-        "--entry-point",
-        "webhook"
+        "--timeout",
+        "30s"
       ]
     }
   ]
