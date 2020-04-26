@@ -12,7 +12,8 @@
     },
     {
       "name": "node:12-alpine",
-      "entrypoint": "find ./node_modules -mtime +10950 -exec touch {} \\;"
+      "entrypoint": "find",
+      "args": ["./node_modules", "-mtime", "+10950", "-exec", "touch", "{}"]
     },
     {
       "name": "gcr.io/cloud-builders/gcloud",
