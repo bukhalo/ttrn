@@ -1,14 +1,18 @@
 {
   "steps": [
     {
-      "name": "node:12",
+      "name": "node:12-alpine",
       "entrypoint": "npm",
       "args": ["ci"]
     },
     {
-      "name": "node:12",
+      "name": "node:12-alpine",
       "entrypoint": "npm",
       "args": ["run", "build"]
+    },
+    {
+      "name": "node:12-alpine",
+      "entrypoint": "find ./node_modules -mtime +10950 -exec touch {} \\;"
     },
     {
       "name": "gcr.io/cloud-builders/gcloud",
