@@ -1,22 +1,75 @@
 {
   "name": "totaren-bot",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "author": "",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/main.js",
   "scripts": {
-    "build": "tsc",
-    "deploy": "gcloud functions deploy totaren-bot --runtime nodejs10 --trigger-http --allow-unauthenticated --entry-point webhook",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prebuild": "rimraf dist",
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "deploy": "gcloud functions deploy totaren-bot --runtime nodejs10 --trigger-http --allow-unauthenticated --entry-point server",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage",
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@types/express": "^4.17.3",
-    "dotenv": "^8.2.0",
+    "@hapi/joi": "^17.1.1",
+    "@nestjs/common": "^7.0.9",
+    "@nestjs/config": "^0.4.0",
+    "@nestjs/core": "^7.0.9",
+    "@nestjs/platform-express": "^7.0.9",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.2",
+    "nestjs-telegraf": "^1.1.0",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "rxjs": "^6.5.5",
     "telegraf": "^3.36.0"
   },
   "devDependencies": {
-    "prettier": "2.0.5",
-    "typescript": "3.8.3"
+    "@nestjs/cli": "^7.1.2",
+    "@nestjs/schematics": "^7.0.0",
+    "@nestjs/testing": "^7.0.9",
+    "@types/express": "^4.17.6",
+    "@types/hapi__joi": "^16.0.12",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.13.2",
+    "@types/supertest": "^2.0.8",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^25.4.0",
+    "prettier": "^2.0.5",
+    "supertest": "^4.0.2",
+    "ts-jest": "^25.4.0",
+    "ts-loader": "^7.0.1",
+    "ts-node": "^8.9.1",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.8.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": "src",
+    "testRegex": ".spec.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node"
   }
 }

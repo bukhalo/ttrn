@@ -1,3 +1,16 @@
+/.git
 /src
+/test
+*.env*
+.eslintrc.js
+.gcloudignore
+.gitignore
 .prettierrc.json
+cloudbuild.json
+nest-cli.json
+package.json
+package-lock.json
+README.md
+renovate.json
+tsconfig.build.json
 tsconfig.json
