@@ -9,7 +9,6 @@ import { AlarmModule } from './alarm/alarm.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.development.local', '.env.development'],
       load: [app, telegrafModule],
       isGlobal: true,
       expandVariables: true,

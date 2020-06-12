@@ -11,11 +11,6 @@
       "args": ["run", "build"]
     },
     {
-      "name": "node:12-alpine",
-      "entrypoint": "find",
-      "args": ["./node_modules", "-mtime", "+10950", "-exec", "touch", "{}", "\;"]
-    },
-    {
       "name": "gcr.io/cloud-builders/gcloud",
       "args": [
         "functions",
