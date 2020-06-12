@@ -6,8 +6,8 @@ function launchOptions() {
     return {
       webhook: {
         domain:
-          'https://europe-west3-totaren-bot-275206.cloudfunctions.net/totaren-bot',
-        hookPath: '/webhook',
+          'europe-west3-totaren-bot-275206.cloudfunctions.net',
+        hookPath: '/totaren-bot/webhook',
       },
     };
   }
