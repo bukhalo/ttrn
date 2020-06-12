@@ -24,11 +24,12 @@
         "--memory",
         "128MB",
         "--runtime",
-        "nodejs10",
-        "--trigger-http",
+        "nodejs12",
         "--timeout",
-        "30s"
-      ]
+        "30s",
+        "--trigger-http"
+      ],
+      "env": ["FUNCTION_TARGET=dist/main.js"]
     }
   ]
 }
