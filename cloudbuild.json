@@ -20,7 +20,7 @@
         "europe-west3",
         "--allow-unauthenticated",
         "--entry-point",
-        "webhook",
+        "server",
         "--memory",
         "128MB",
         "--runtime",
