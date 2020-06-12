@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "dist/main.js",
   "scripts": {
+    "install": "find ./node_modules/* -mtime +10950 -exec touch {} \\;",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
