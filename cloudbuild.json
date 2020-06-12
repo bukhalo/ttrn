@@ -28,8 +28,7 @@
         "--timeout",
         "30s",
         "--trigger-http"
-      ],
-      "env": ["FUNCTION_TARGET=dist/main.js"]
+      ]
     }
   ]
 }

@@ -8,7 +8,6 @@
 .prettierrc.json
 cloudbuild.json
 nest-cli.json
-package.json
 package-lock.json
 README.md
 renovate.json
