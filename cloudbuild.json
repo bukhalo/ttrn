@@ -15,7 +15,7 @@
       "args": [
         "functions",
         "deploy",
-        "totaren-bot",
+        "totaren-bot-europe-west-3-production",
         "--region",
         "europe-west3",
         "--allow-unauthenticated",

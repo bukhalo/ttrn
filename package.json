@@ -15,7 +15,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "start:function": "functions-framework --entrypoint=server --source=./dist/main.js --target=server --port=3000",
-    "deploy": "gcloud functions deploy totaren-bot --region europe-west3 --allow-unauthenticated --entry-point server --memory 128MB --runtime nodejs12 --timeout 30s --trigger-http",
+    "deploy": "gcloud functions deploy totaren-bot-europe-west-3-production --region europe-west3 --allow-unauthenticated --entry-point server --memory 128MB --runtime nodejs12 --timeout 30s --trigger-http",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
