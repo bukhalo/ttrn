@@ -5,9 +5,8 @@ function launchOptions() {
   if (process.env.NODE_ENV === 'production') {
     return {
       webhook: {
-        domain:
-          'europe-west3-totaren-bot-275206.cloudfunctions.net',
-        hookPath: '/totaren-bot/webhook',
+        domain: 'europe-west3-civic-brand-280108.cloudfunctions.net',
+        hookPath: '/totaren-bot-europe-west-3-production/webhook',
       },
     };
   }
