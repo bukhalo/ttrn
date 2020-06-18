@@ -21,6 +21,8 @@ export class RepostService {
 
   @TelegrafOn('text')
   async repostText(ctx: ContextMessageUpdate) {
+    // @ts-ignore
+    ctx.webhookReply = false;
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendMessage(this.chatId, ctx.update.message.text);
     }
@@ -28,6 +30,8 @@ export class RepostService {
 
   @TelegrafOn('sticker')
   async repostSticker(ctx: ContextMessageUpdate) {
+    // @ts-ignore
+    ctx.webhookReply = false;
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendSticker(
         this.chatId,
