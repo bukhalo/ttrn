@@ -1,4 +1,4 @@
-import { object, string, number, ValidationOptions } from '@hapi/joi';
+import { object, string, ValidationOptions } from '@hapi/joi';
 
 export const validationSchema = object({
   NODE_ENV: string()
@@ -6,8 +6,3 @@ export const validationSchema = object({
     .default('development'),
   BOT_TOKEN: string().required(),
 });
-
-export const validationOptions: ValidationOptions = {
-  allowUnknown: true,
-  abortEarly: true,
-};

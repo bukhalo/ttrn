@@ -1,3 +1,3 @@
 export * from './app.config';
-export * from './env-validation.config';
-export * from './telegraf-modue.config';
+export * from './env-validation-options.config';
+export * from './env-validation-schema.config';

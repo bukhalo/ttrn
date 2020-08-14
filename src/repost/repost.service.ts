@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TelegrafOn } from 'nestjs-telegraf';
-import { ContextMessageUpdate } from 'telegraf';
+import { TelegrafOn, ContextMessageUpdate } from 'nestjs-telegraf';
 
 @Injectable()
 export class RepostService {
@@ -20,33 +19,32 @@ export class RepostService {
   }
 
   @TelegrafOn('text')
-  async repostText(ctx: ContextMessageUpdate) {
-    // @ts-ignore
-    ctx.webhookReply = false;
+  async repostText(ctx: ContextMessageUpdate, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendMessage(this.chatId, ctx.update.message.text);
     }
+    next();
   }
 
   @TelegrafOn('sticker')
-  async repostSticker(ctx: ContextMessageUpdate) {
-    // @ts-ignore
-    ctx.webhookReply = false;
+  async repostSticker(ctx: ContextMessageUpdate, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendSticker(
         this.chatId,
         ctx.update.message.sticker.file_id,
       );
     }
+    next();
   }
 
   @TelegrafOn('audio')
-  async repostAudio(ctx: ContextMessageUpdate) {
+  async repostAudio(ctx: ContextMessageUpdate, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendAudio(
         this.chatId,
         ctx.update.message.audio.file_id,
       );
     }
+    next();
   }
 }
