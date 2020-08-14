@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Hears, On, Context } from 'nestjs-telegraf';
+import { Hears, On, Context, Extra } from 'nestjs-telegraf';
 import { booleanRandomizer } from '../core/utils';
 
 @Injectable()
