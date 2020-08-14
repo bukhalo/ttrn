@@ -1,35 +1,37 @@
 import { Injectable } from '@nestjs/common';
-import { TelegrafHears, TelegrafOn, ContextMessageUpdate } from 'nestjs-telegraf';
+import { Hears, On, Context, Extra } from 'nestjs-telegraf';
 import { booleanRandomizer } from '../core/utils';
 
 @Injectable()
 export class PeopleMemesService {
-  @TelegrafHears(new RegExp('(а|т)(т|ы|о|а)(т|р)(т|р|о|а|н)', 'gi'))
-  hearsTotaren(ctx: ContextMessageUpdate, next) {
+  @Hears(new RegExp('(а|т)(т|ы|о|а)(т|р)(т|р|о|а|н)', 'gi'))
+  hearsTotaren(ctx: Context, next) {
     if (booleanRandomizer(50)) {
       ctx.reply('пидор');
     }
     next();
   }
 
-  @TelegrafHears(new RegExp('(п)(и)(д)(о|а|р|э)', 'gi'))
-  hearsPidor(ctx: ContextMessageUpdate, next) {
+  @Hears(new RegExp('(п)(и)(д)(о|а|р|э)', 'gi'))
+  hearsPidor(ctx: Context, next) {
     if (booleanRandomizer(50)) {
       ctx.reply('тотарен');
     }
     next();
   }
 
-  @TelegrafHears(new RegExp('(я)(р)(е|и)(к)', 'gi'))
-  hearsYarek(ctx: ContextMessageUpdate, next) {
+  @Hears(new RegExp('(я)(р)(е|и)(к)', 'gi'))
+  hearsYarek(ctx: Context, next) {
     if (booleanRandomizer(50)) {
-      ctx.reply('Вы всё ещё готовите на огне @yaroslav_y? Тогда мы идём к вам.');
+      ctx.reply(
+        'Вы всё ещё готовите на огне @yaroslav_y? Тогда мы идём к вам.',
+      );
     }
     next();
   }
 
-  @TelegrafOn('message')
-  toopa(ctx: ContextMessageUpdate, next) {
+  @On('message')
+  toopa(ctx: Context, next) {
     const messageId = ctx.update.message.message_id;
 
     if (booleanRandomizer(1) && messageId) {
