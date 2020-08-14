@@ -1,2 +1,0 @@
-export const BOT_GROUP = -1001310578019;
-export const ALLOWED_POST_TO_GROUP = [80098287];
