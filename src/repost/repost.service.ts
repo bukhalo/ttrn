@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TelegrafOn, ContextMessageUpdate } from 'nestjs-telegraf';
+import { On, Context } from 'nestjs-telegraf';
 
 @Injectable()
 export class RepostService {
@@ -9,7 +9,7 @@ export class RepostService {
   }
   private readonly chatId: number;
 
-  private isUserHasAccessForRepost(ctx: ContextMessageUpdate): boolean {
+  private isUserHasAccessForRepost(ctx: Context): boolean {
     const isPm = ctx.update?.message?.chat?.type === 'private';
     const senderId = ctx.update?.message?.from?.id;
     const isUserAllowed = this.configService
@@ -18,16 +18,16 @@ export class RepostService {
     return isPm && senderId && isUserAllowed;
   }
 
-  @TelegrafOn('text')
-  async repostText(ctx: ContextMessageUpdate, next) {
+  @On('text')
+  async repostText(ctx: Context, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendMessage(this.chatId, ctx.update.message.text);
     }
     next();
   }
 
-  @TelegrafOn('sticker')
-  async repostSticker(ctx: ContextMessageUpdate, next) {
+  @On('sticker')
+  async repostSticker(ctx: Context, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendSticker(
         this.chatId,
@@ -37,8 +37,8 @@ export class RepostService {
     next();
   }
 
-  @TelegrafOn('audio')
-  async repostAudio(ctx: ContextMessageUpdate, next) {
+  @On('audio')
+  async repostAudio(ctx: Context, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendAudio(
         this.chatId,
