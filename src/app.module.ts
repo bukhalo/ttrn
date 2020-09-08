@@ -5,6 +5,7 @@ import { app } from './core/configs';
 import { PeopleMemesModule } from './people-memes/people-memes.module';
 import { RepostModule } from './repost/repost.module';
 import { AlarmModule } from './alarm/alarm.module';
+import { CockCheckModule } from './cock-check/cock-check.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AlarmModule } from './alarm/alarm.module';
     PeopleMemesModule,
     RepostModule,
     AlarmModule,
+    CockCheckModule,
   ],
 })
 export class AppModule {}

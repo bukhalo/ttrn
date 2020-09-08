@@ -13,7 +13,7 @@ const getChatId = (): number => {
     return -1001310578019;
   }
   // TTRN Group [TEST]
-  return -413294688;
+  return -1001463143458;
 };
 
 export const repost = registerAs(
