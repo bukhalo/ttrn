@@ -18,7 +18,9 @@ export class CockCheckService {
     setQueues(this.cockCheckQueue);
   }
 
-  private readonly chatId = this.configService.get('repost.chatId');
+  private readonly botGroupId = this.configService.get<number>(
+    'app.botGroupId',
+  );
   private readonly kickJob = async userId =>
     await this.cockCheckQueue.getJob(`${userId}-kick`);
   private readonly setCockJob = async userId =>
@@ -33,13 +35,21 @@ export class CockCheckService {
     await this.cockCheckQueue.add(
       'set-cock',
       user,
-      { delay: 60 * 1000, jobId: `${user.id}-set-cock`, removeOnComplete: true }, // one minute delay
+      {
+        delay: 60 * 1000,
+        jobId: `${user.id}-set-cock`,
+        removeOnComplete: true,
+      }, // one minute delay
     );
 
     await this.cockCheckQueue.add(
       'kick',
       user,
-      { delay: 24 * 60 * 60 * 1000, jobId: `${user.id}-kick`, removeOnComplete: true }, // one day delay
+      {
+        delay: 24 * 60 * 60 * 1000,
+        jobId: `${user.id}-kick`,
+        removeOnComplete: true,
+      }, // one day delay
     );
 
     return ctx.reply(
@@ -59,14 +69,17 @@ export class CockCheckService {
     const bot: TelegrafProvider = this.moduleRef.get('TelegrafProvider', {
       strict: false,
     });
-    await bot.telegram.sendMessage(this.chatId, `${username} отныне петушара`);
+    await bot.telegram.sendMessage(
+      this.botGroupId,
+      `${username} отныне петушара`,
+    );
   }
 
   async kickUser(id: number) {
     const bot: TelegrafProvider = this.moduleRef.get('TelegrafProvider', {
       strict: false,
     });
-    await bot.telegram.kickChatMember(this.chatId, id);
+    await bot.telegram.kickChatMember(this.botGroupId, id);
   }
 
   async isUserValid(ctx: Context): Promise<boolean> {
