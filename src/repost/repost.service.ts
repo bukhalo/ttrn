@@ -4,10 +4,9 @@ import { On, Context } from 'nestjs-telegraf';
 
 @Injectable()
 export class RepostService {
-  constructor(private readonly configService: ConfigService) {
-    this.chatId = configService.get<number>('repost.chatId');
-  }
-  private readonly chatId: number;
+  constructor(private readonly configService: ConfigService) {}
+
+  private readonly botGroupId = this.configService.get<number>('app.botGroupId');
 
   private isUserHasAccessForRepost(ctx: Context): boolean {
     const isPm = ctx.update?.message?.chat?.type === 'private';
@@ -21,7 +20,7 @@ export class RepostService {
   @On('text')
   async repostText(ctx: Context, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
-      await ctx.telegram.sendMessage(this.chatId, ctx.update.message.text);
+      await ctx.telegram.sendMessage(this.botGroupId, ctx.update.message.text);
     }
     next();
   }
@@ -30,7 +29,7 @@ export class RepostService {
   async repostSticker(ctx: Context, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendSticker(
-        this.chatId,
+        this.botGroupId,
         ctx.update.message.sticker.file_id,
       );
     }
@@ -41,7 +40,7 @@ export class RepostService {
   async repostAudio(ctx: Context, next) {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendAudio(
-        this.chatId,
+        this.botGroupId,
         ctx.update.message.audio.file_id,
       );
     }
