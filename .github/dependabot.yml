@@ -1,11 +1,21 @@
 version: 2
 updates:
   # Configuration for npm
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
     reviewers:
-      - "bukhalo"
+      - 'bukhalo'
     assignees:
-      - "bukhalo"
+      - 'bukhalo'
+
+  # Configuration for Dockerfile
+  - package-ecosystem: 'docker'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    reviewers:
+      - 'bukhalo'
+    assignees:
+      - 'bukhalo'
