@@ -4,6 +4,7 @@ import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { ModuleRef } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import { setQueues } from 'bull-board'
 
 @Injectable()
 export class CockCheckService {
@@ -13,7 +14,9 @@ export class CockCheckService {
 
     @InjectQueue('cockCheck')
     private cockCheckQueue: Queue,
-  ) {}
+  ) {
+    setQueues(this.cockCheckQueue);
+  }
 
   private readonly chatId = this.configService.get('repost.chatId');
   private readonly kickJob = async userId =>
@@ -30,13 +33,13 @@ export class CockCheckService {
     await this.cockCheckQueue.add(
       'set-cock',
       user,
-      { delay: 60 * 1000, jobId: `${user.id}-set-cock` }, // one minute delay
+      { delay: 5000, jobId: `${user.id}-set-cock` }, // one minute delay
     );
 
     await this.cockCheckQueue.add(
       'kick',
       user,
-      { delay: 70 * 1000, jobId: `${user.id}-kick` }, // one minute delay
+      { delay: 10000, jobId: `${user.id}-kick` }, // one minute delay
     );
 
     return ctx.reply(
