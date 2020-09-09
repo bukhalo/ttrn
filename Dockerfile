@@ -1,11 +1,11 @@
-FROM node:12-alpine as builder
+FROM node:14-alpine as builder
 
 WORKDIR /app
 ADD . ./
 RUN npm i
 RUN npm run build
 
-FROM node:12-alpine
+FROM node:14-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 ADD package.json package-lock.json ./
