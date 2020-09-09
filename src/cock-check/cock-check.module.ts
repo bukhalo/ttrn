@@ -12,8 +12,9 @@ import { CockCheckProcessor } from './cock-check.processor';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         redis: {
-          host: configService.get<string>('app.redisHost'),
-          port: configService.get<number>('app.redisPort'),
+          host: configService.get<string>('redis.host'),
+          port: configService.get<number>('redis.port'),
+          password: configService.get<string>('redis.password'),
         },
       }),
       inject: [ConfigService],
