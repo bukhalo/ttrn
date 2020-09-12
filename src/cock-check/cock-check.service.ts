@@ -5,6 +5,7 @@ import { Queue } from 'bull';
 import { ModuleRef } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 import { setQueues } from 'bull-board';
+import { getTelegramUsername } from '../core/utils';
 
 @Injectable()
 export class CockCheckService {
@@ -29,8 +30,6 @@ export class CockCheckService {
   async check(ctx: Context) {
     // @ts-ignore FIXME: new_chat_member exist, wrong types in Telegraf
     const user = ctx.update.message.new_chat_member;
-    const username =
-      `@${user.username}` || `${user.first_name} ${user.last_name}`;
 
     await this.cockCheckQueue.add(
       'set-cock',
@@ -53,7 +52,7 @@ export class CockCheckService {
     );
 
     return ctx.reply(
-      `${username}, ты петушара?`,
+      `${getTelegramUsername(user)}, ты петушара?`,
       Extra.markup(
         Markup.inlineKeyboard([
           Markup.callbackButton('Нет', 'cock-check-answer-no'),
@@ -64,14 +63,12 @@ export class CockCheckService {
   }
 
   async sendCock(job: any) {
-    const username =
-      `@${job.data.username}` || `${job.data.first_name} ${job.data.last_name}`;
     const bot: TelegrafProvider = this.moduleRef.get('TelegrafProvider', {
       strict: false,
     });
     await bot.telegram.sendMessage(
       this.botGroupId,
-      `${username} отныне петушара`,
+      `${getTelegramUsername(job.data)} отныне петушара`,
     );
   }
 
@@ -84,13 +81,11 @@ export class CockCheckService {
 
   async isUserValid(ctx: Context): Promise<boolean> {
     const user = ctx.update.callback_query.from;
-    const username =
-      `@${user.username}` || `${user.first_name} ${user.last_name}`;
     const kickJob = await this.cockCheckQueue.getJob(`${user.id}-kick`);
     const setCockJob = await this.cockCheckQueue.getJob(`${user.id}-set-cock`);
 
     if (!kickJob || !setCockJob) {
-      await ctx.reply(`${username}, не для тебя кнопка, пёс.`);
+      await ctx.reply(`${getTelegramUsername(user)}, не для тебя кнопка, пёс.`);
       return false;
     }
     return true;
@@ -98,11 +93,9 @@ export class CockCheckService {
 
   async removeKickJob(ctx: Context) {
     const user = ctx.update.callback_query.from;
-    const username =
-      `@${user.username}` || `${user.first_name} ${user.last_name}`;
     const kickJob = await this.kickJob(user.id);
     const cockJob = await this.setCockJob(user.id);
-    if (kickJob || cockJob) await ctx.reply(`${username} ок.`);
+    if (kickJob || cockJob) await ctx.reply(`${getTelegramUsername(user)} ок.`);
     if (kickJob) await kickJob.remove();
     if (cockJob) await cockJob.remove();
     return;
