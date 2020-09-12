@@ -85,7 +85,7 @@ export class CockCheckService {
     const setCockJob = await this.cockCheckQueue.getJob(`${user.id}-set-cock`);
 
     if (!kickJob || !setCockJob) {
-      await ctx.reply(`${getTelegramUsername(user)}, не для тебя кнопка, пёс.`);
+      await ctx.answerCbQuery('Не для тебя кнопка, пёс.');
       return false;
     }
     return true;
@@ -95,7 +95,7 @@ export class CockCheckService {
     const user = ctx.update.callback_query.from;
     const kickJob = await this.kickJob(user.id);
     const cockJob = await this.setCockJob(user.id);
-    if (kickJob || cockJob) await ctx.reply(`${getTelegramUsername(user)} ок.`);
+    if (kickJob || cockJob) await ctx.answerCbQuery('👍');
     if (kickJob) await kickJob.remove();
     if (cockJob) await cockJob.remove();
     return;
