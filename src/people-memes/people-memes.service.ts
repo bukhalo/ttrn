@@ -12,6 +12,14 @@ export class PeopleMemesService {
     next();
   }
 
+  @Hears(new RegExp('(д)(о)(к)(у|а|и|ментация|ментацию)', 'gi'))
+  hearsProfessors(ctx: Context, next) {
+    if (booleanRandomizer(100)) {
+      ctx.reply('Доку профессора писали наверное');
+    }
+    next();
+  }
+
   @Hears(new RegExp('(п)(и)(д)(о|а|р|э)', 'gi'))
   hearsPidor(ctx: Context, next) {
     if (booleanRandomizer(50)) {
