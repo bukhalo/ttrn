@@ -6,10 +6,14 @@ import { On, Context } from 'nestjs-telegraf';
 export class RepostService {
   constructor(private readonly configService: ConfigService) {}
 
-  private readonly botGroupId = this.configService.get<number>('app.botGroupId');
+  private readonly botGroupId = this.configService.get<number>(
+    'app.botGroupId',
+  );
 
   private isUserHasAccessForRepost(ctx: Context): boolean {
     const isPm = ctx.update?.message?.chat?.type === 'private';
+    return isPm;
+
     const senderId = ctx.update?.message?.from?.id;
     const isUserAllowed = this.configService
       .get<number[]>('repost.allowedUserIds')
@@ -22,7 +26,7 @@ export class RepostService {
     if (this.isUserHasAccessForRepost(ctx)) {
       await ctx.telegram.sendMessage(this.botGroupId, ctx.update.message.text);
     }
-    next();
+    await next();
   }
 
   @On('sticker')
@@ -33,7 +37,7 @@ export class RepostService {
         ctx.update.message.sticker.file_id,
       );
     }
-    next();
+    await next();
   }
 
   @On('audio')
@@ -44,6 +48,27 @@ export class RepostService {
         ctx.update.message.audio.file_id,
       );
     }
-    next();
+    await next();
+  }
+
+  @On('document')
+  async repostDocument(ctx: Context, next) {
+    if (this.isUserHasAccessForRepost(ctx)) {
+      await ctx.telegram.sendDocument(
+        this.botGroupId,
+        ctx.update.message.document.file_id,
+      );
+    }
+    await next();
+  }
+
+  @On('photo')
+  async repostPhoto(ctx: Context, next) {
+    if (this.isUserHasAccessForRepost(ctx)) {
+      for (const photo of ctx.update.message.photo) {
+        await ctx.telegram.sendPhoto(this.botGroupId, photo.file_id);
+      }
+    }
+    await next();
   }
 }
