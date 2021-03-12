@@ -40,7 +40,7 @@ async def doka(msg: types.Message):
     chat_type=types.ChatType.SUPERGROUP
 )
 async def pidor(msg: types.Message):
-    await msg.answer('пидор')
+    await msg.answer('тотарен')
 
 
 @dp.message_handler(
