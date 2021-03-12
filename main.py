@@ -2,14 +2,18 @@ import logging
 import random
 
 from os import getenv
+from typing import List
 from aiogram import Bot, Dispatcher, types, executor, filters
 
 TOKEN = getenv('TOKEN')
 GROUP_ID = getenv('GROUP')
+ADMIN_IDS = getenv('ADMIN_IDS')  # comma-separated list
 logging.basicConfig(level=logging.DEBUG)
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot=bot)
+
+admin_ids: List[int] = list(map(int, ADMIN_IDS.split(",")))  # cast comma-separated list to `List[int]`
 
 
 def decision(probability: float):
@@ -67,6 +71,7 @@ async def toopa(msg: types.Message):
 
 
 @dp.message_handler(
+    lambda message: message['from']['id'] in admin_ids,
     content_types=[
         types.ContentType.TEXT,
         types.ContentType.DICE,
