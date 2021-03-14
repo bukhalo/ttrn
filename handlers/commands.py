@@ -3,6 +3,7 @@ import aiogram.utils.markdown as md
 from misc import dp
 from config import admin_ids
 
+
 @dp.message_handler(commands=['all', 'alarm'], chat_type=types.ChatType.SUPERGROUP)
 @dp.message_handler(text=['алярм', 'алярма', 'эй чушканы'], chat_type=types.ChatType.SUPERGROUP)
 async def mention_all(msg: types.Message):

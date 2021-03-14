@@ -1,6 +1,7 @@
 from aiogram import types
 from misc import bot, dp
-from config import  GROUP_ID, admin_ids
+from config import GROUP_ID, admin_ids
+
 
 @dp.message_handler(
     lambda message: message['from']['id'] in admin_ids,
